@@ -52,10 +52,10 @@ export default function WorkExperienceSection() {
           )}
         >
           <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent z-10"></div>
-          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent z-10"></div>
+          {/* <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent z-10"></div> */}
 
-          {/* First row of logos */}
-          <div className="flex animate-scroll-rtl mb-8">
+          {/* First row of logos - faster animation */}
+          <div className="flex fast-scroll-rtl mb-8">
             {[...logoImages, ...logoImages].map((logo, index) => (
               <div key={`row1-${index}`} className="flex-shrink-0 mx-8">
                 <Image
@@ -68,9 +68,28 @@ export default function WorkExperienceSection() {
               </div>
             ))}
           </div>
-
-          
         </div>
+
+        {/* Add this style tag inside your component to define the fast animation */}
+        <style jsx global>{`
+          @keyframes fastScrollRtl {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(calc(-50% - 2rem));
+            }
+          }
+          
+          .fast-scroll-rtl {
+            animation: fastScrollRtl 15s linear infinite;
+          }
+          
+          /* Speed up on hover (optional) */
+          .fast-scroll-rtl:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
       </div>
     </section>
   )
