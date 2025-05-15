@@ -8,7 +8,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 
 // Expertise data
 const expertiseData = {
-  Proficient: ["Python", "Java", "C", "C++", "SQL", "Next.js", "Tailwind CSS", "JavaScript", "Flutter", "UI/UX Design"],
+  Proficient: ["Python", "Java", "C", "C++", "SQL", "Next.js", "Tailwind", "JS", "Flutter", "UI/UX Design"],
   "Familiar with": ["C++", "Python", "Dart", "React"],
   "Operating System": ["Windows", "Kali Linux", "Ubuntu"],
   "Core Skills": [
@@ -54,11 +54,11 @@ const prepareChartData = (skills: string[], category: string) => {
 // Prepare programming skills chart data
 const programmingSkillsData = [
   ...prepareChartData(
-    expertiseData["Proficient"].filter((skill) => ["Python", "Java", "C", "C++", "JavaScript", "SQL"].includes(skill)),
+    expertiseData["Proficient"].filter((skill) => ["Python", "Java", "C", "C++", "JS", "SQL"].includes(skill)),
     "Proficient",
   ),
   ...prepareChartData(
-    expertiseData["Familiar with"].filter((skill) => ["Dart", "React"].includes(skill)),
+    expertiseData["Familiar with"].filter((skill) => ["Next.js", "React"].includes(skill)),
     "Familiar with",
   ),
 ].sort((a, b) => b.score - a.score)
@@ -66,7 +66,7 @@ const programmingSkillsData = [
 // Prepare web technologies chart data
 const webTechData = [
   ...prepareChartData(
-    expertiseData["Proficient"].filter((skill) => ["Next.js", "Tailwind CSS", "JavaScript"].includes(skill)),
+    expertiseData["Proficient"].filter((skill) => ["Next.js", "Tailwind", "JS"].includes(skill)),
     "Proficient",
   ),
   ...prepareChartData(
@@ -111,284 +111,334 @@ export default function ExpertiseSection() {
   }, [])
 
   return (
-    <section id="expertise" ref={sectionRef} className="py-20 px-4 bg-muted/30">
-      <div className="container mx-auto">
-        <h2 className="text-3xl font-bold mb-4 text-center">My Expertise</h2>
-        <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-12">
-          A comprehensive overview of my technical skills, knowledge areas, and professional capabilities.
-        </p>
+  <section id="expertise" ref={sectionRef} className="py-12 md:py-20 px-3 md:px-4 bg-muted/30">
+    <div className="container mx-auto">
+      <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-center">My Expertise</h2>
+      <p className="text-sm md:text-base text-muted-foreground text-center max-w-xs sm:max-w-lg md:max-w-2xl mx-auto mb-8 md:mb-12">
+        A comprehensive overview of my technical skills, knowledge areas, and professional capabilities.
+      </p>
 
-        <div
-          className={cn(
-            "transition-all duration-1000 transform",
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12",
-          )}
-        >
-          <Tabs defaultValue="skills" className="w-full">
-            <TabsList className="grid grid-cols-2 md:grid-cols-4 mb-8">
-              <TabsTrigger value="skills">Technical</TabsTrigger>
-              <TabsTrigger value="security">CyberSecurity</TabsTrigger>
-              <TabsTrigger value="design">UI/UX</TabsTrigger>
-              <TabsTrigger value="other">Other</TabsTrigger>
-            </TabsList>
+      <div
+        className={cn(
+          "transition-all duration-1000 transform",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12",
+        )}
+      >
+        <Tabs defaultValue="skills" className="w-full">
+          <div className="overflow-x-auto pb-2">
+  <TabsList className="flex w-full md:w-auto md:grid md:grid-cols-4 mb-4 md:mb-6">
+    <TabsTrigger 
+      value="skills" 
+      className="flex-1 min-w-16 text-xs sm:text-sm md:text-base py-1.5 px-2 md:px-4"
+    >
+      Technical
+    </TabsTrigger>
+    <TabsTrigger 
+      value="security" 
+      className="flex-1 min-w-16 text-xs sm:text-sm md:text-base py-1.5 px-2 md:px-4"
+    >
+      Security
+    </TabsTrigger>
+    <TabsTrigger 
+      value="design" 
+      className="flex-1 min-w-16 text-xs sm:text-sm md:text-base py-1.5 px-2 md:px-4"
+    >
+      UI/UX
+    </TabsTrigger>
+    <TabsTrigger 
+      value="other" 
+      className="flex-1 min-w-16 text-xs sm:text-sm md:text-base py-1.5 px-2 md:px-4"
+    >
+      Other
+    </TabsTrigger>
+  </TabsList>
+</div>
 
-            <TabsContent value="skills" className="space-y-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Programming Languages Chart */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Programming Languages</CardTitle>
-                    <CardDescription>Proficiency in various programming languages</CardDescription>
-                  </CardHeader>
-                  <CardContent className="h-80">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart
-                        data={programmingSkillsData}
-                        layout="vertical"
-                        margin={{ top: 5, right: 30, left: 40, bottom: 5 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" horizontal={false} />
-                        <XAxis type="number" domain={[0, 100]} />
-                        <YAxis dataKey="name" type="category" width={100} />
-                        <Tooltip
-                          formatter={(value) => [`${value}%`, "Proficiency"]}
-                          cursor={{ fill: "rgba(0, 0, 0, 0.1)" }}
-                        />
-                        <Bar dataKey="score" radius={[0, 4, 4, 0]}>
-                          {programmingSkillsData.map((entry, index) => (
-                            <Cell
-                              key={`cell-${index}`}
-                              fill={entry.score > 80 ? "#000000" : "#666666"}
-                              fillOpacity={entry.score / 100}
-                            />
-                          ))}
-                        </Bar>
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </CardContent>
-                </Card>
-
-                {/* Web Technologies Chart */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Web Technologies</CardTitle>
-                    <CardDescription>Proficiency in web development frameworks and tools</CardDescription>
-                  </CardHeader>
-                  <CardContent className="h-80">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart
-                        data={webTechData}
-                        layout="vertical"
-                        margin={{ top: 5, right: 30, left: 40, bottom: 5 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" horizontal={false} />
-                        <XAxis type="number" domain={[0, 100]} />
-                        <YAxis dataKey="name" type="category" width={100} />
-                        <Tooltip
-                          formatter={(value) => [`${value}%`, "Proficiency"]}
-                          cursor={{ fill: "rgba(0, 0, 0, 0.1)" }}
-                        />
-                        <Bar dataKey="score" radius={[0, 4, 4, 0]}>
-                          {webTechData.map((entry, index) => (
-                            <Cell
-                              key={`cell-${index}`}
-                              fill={entry.score > 80 ? "#000000" : "#666666"}
-                              fillOpacity={entry.score / 100}
-                            />
-                          ))}
-                        </Bar>
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Operating Systems */}
+          <TabsContent value="skills" className="space-y-6 md:space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+              {/* Programming Languages Chart */}
               <Card>
-                <CardHeader>
-                  <CardTitle>Operating Systems</CardTitle>
-                  <CardDescription>Proficiency in different operating systems</CardDescription>
+                <CardHeader className="p-4 md:p-6">
+                  <CardTitle className="text-lg md:text-xl">Programming Languages</CardTitle>
+                  <CardDescription className="text-xs md:text-sm">Proficiency in various programming languages</CardDescription>
                 </CardHeader>
-                <CardContent className="flex flex-wrap gap-3">
-                  {expertiseData["Operating System"].map((os, index) => (
-                    <div
-                      key={index}
-                      className="px-4 py-2 bg-background rounded-lg border border-border flex items-center gap-2"
+                <CardContent className="p-2 md:p-4 h-64 md:h-80">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={programmingSkillsData}
+                      layout="vertical"
+                      margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
                     >
-                      <div className="w-3 h-3 rounded-full bg-black dark:bg-white"></div>
-                      <span>{os}</span>
+                      <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                      <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 12 }} />
+                      <YAxis 
+                        dataKey="name" 
+                        type="category" 
+                        width={70} 
+                        tick={{ fontSize: 12 }}
+                        tickMargin={5}
+                      />
+                      <Tooltip
+                        formatter={(value) => [`${value}%`, "Proficiency"]}
+                        cursor={{ fill: "rgba(0, 0, 0, 0.1)" }}
+                        contentStyle={{ fontSize: 12 }}
+                      />
+                      <Bar dataKey="score" radius={[0, 4, 4, 0]}>
+                        {programmingSkillsData.map((entry, index) => (
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={entry.score > 80 ? "#000000" : "#666666"}
+                            fillOpacity={entry.score / 100}
+                          />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </CardContent>
+              </Card>
+
+              {/* Web Technologies Chart */}
+              <Card>
+                <CardHeader className="p-4 md:p-6">
+                  <CardTitle className="text-lg md:text-xl">Web Technologies</CardTitle>
+                  <CardDescription className="text-xs md:text-sm">Proficiency in web development frameworks and tools</CardDescription>
+                </CardHeader>
+                <CardContent className="p-2 md:p-4 h-64 md:h-80">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={webTechData}
+                      layout="vertical"
+                      margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                      <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 12 }} />
+                      <YAxis 
+                        dataKey="name" 
+                        type="category" 
+                        width={70} 
+                        tick={{ fontSize: 12 }}
+                        tickMargin={5}
+                      />
+                      <Tooltip
+                        formatter={(value) => [`${value}%`, "Proficiency"]}
+                        cursor={{ fill: "rgba(0, 0, 0, 0.1)" }}
+                        contentStyle={{ fontSize: 12 }}
+                      />
+                      <Bar dataKey="score" radius={[0, 4, 4, 0]}>
+                        {webTechData.map((entry, index) => (
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={entry.score > 80 ? "#000000" : "#666666"}
+                            fillOpacity={entry.score / 100}
+                          />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Operating Systems */}
+            <Card>
+              <CardHeader className="p-4 md:p-6">
+                <CardTitle className="text-lg md:text-xl">Operating Systems</CardTitle>
+                <CardDescription className="text-xs md:text-sm">Proficiency in different operating systems</CardDescription>
+              </CardHeader>
+              <CardContent className="p-4 md:p-6 flex flex-wrap gap-2 md:gap-3">
+                {expertiseData["Operating System"].map((os, index) => (
+                  <div
+                    key={index}
+                    className="px-3 py-1.5 md:px-4 md:py-2 bg-background rounded-lg border border-border flex items-center gap-1.5 md:gap-2 text-xs md:text-sm"
+                  >
+                    <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-black dark:bg-white"></div>
+                    <span>{os}</span>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="security">
+            {/* Security Skills Chart */}
+            <Card>
+              <CardHeader className="p-4 md:p-6">
+                <CardTitle className="text-lg md:text-xl">Security & Forensics Skills</CardTitle>
+                <CardDescription className="text-xs md:text-sm">Proficiency in cybersecurity and digital forensics</CardDescription>
+              </CardHeader>
+              <CardContent className="p-2 md:p-4 h-72 md:h-96">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={securitySkillsData}
+                    layout="vertical"
+                    margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                    <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 12 }} />
+                    <YAxis 
+                      dataKey="name" 
+                      type="category" 
+                      width={80} 
+                      tick={{ fontSize: 12 }}
+                      tickMargin={5}
+                    />
+                    <Tooltip
+                      formatter={(value) => [`${value}%`, "Proficiency"]}
+                      cursor={{ fill: "rgba(0, 0, 0, 0.1)" }}
+                      contentStyle={{ fontSize: 12 }}
+                    />
+                    <Bar dataKey="score" radius={[0, 4, 4, 0]}>
+                      {securitySkillsData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill="#000000" fillOpacity={entry.score / 100} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+
+            {/* Core Skills List */}
+            <Card className="mt-6 md:mt-8">
+              <CardHeader className="p-4 md:p-6">
+                <CardTitle className="text-lg md:text-xl">Additional Security Skills</CardTitle>
+                <CardDescription className="text-xs md:text-sm">Other security and forensics capabilities</CardDescription>
+              </CardHeader>
+              <CardContent className="p-4 md:p-6">
+                <div className="grid grid-cols-1 gap-3 md:gap-4">
+                  {expertiseData["Core Skills"]
+                    .filter(
+                      (skill) =>
+                        !securitySkillsData.some(
+                          (item) => item.name === skill || item.name === skill.split("(")[0].trim(),
+                        ),
+                    )
+                    .map((skill, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center gap-2 md:gap-3 p-2 md:p-3 bg-background rounded-lg border border-border text-xs md:text-sm"
+                      >
+                        <div className="w-2 h-2 rounded-full bg-black dark:bg-white"></div>
+                        <span>{skill}</span>
+                      </div>
+                    ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="design">
+            {/* Design Skills Chart */}
+            <Card>
+              <CardHeader className="p-4 md:p-6">
+                <CardTitle className="text-lg md:text-xl">Design Skills</CardTitle>
+                <CardDescription className="text-xs md:text-sm">Proficiency in design and UI/UX</CardDescription>
+              </CardHeader>
+              <CardContent className="p-2 md:p-4 h-64 md:h-80">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={designSkillsData}
+                    layout="vertical"
+                    margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                    <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 12 }} />
+                    <YAxis 
+                      dataKey="name" 
+                      type="category" 
+                      width={80} 
+                      tick={{ fontSize: 12 }}
+                      tickMargin={5}
+                    />
+                    <Tooltip
+                      formatter={(value) => [`${value}%`, "Proficiency"]}
+                      cursor={{ fill: "rgba(0, 0, 0, 0.1)" }}
+                      contentStyle={{ fontSize: 12 }}
+                    />
+                    <Bar dataKey="score" radius={[0, 4, 4, 0]}>
+                      {designSkillsData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill="#000000" fillOpacity={entry.score / 100} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+
+            {/* Design Skills Details */}
+            <Card className="mt-6 md:mt-8">
+              <CardHeader className="p-4 md:p-6">
+                <CardTitle className="text-lg md:text-xl">Design Specializations</CardTitle>
+                <CardDescription className="text-xs md:text-sm">Detailed design capabilities and focus areas</CardDescription>
+              </CardHeader>
+              <CardContent className="p-4 md:p-6">
+                <div className="space-y-3 md:space-y-4">
+                  {expertiseData["Design Skills"].map((skill, index) => (
+                    <div key={index} className="p-3 md:p-4 bg-background rounded-lg border border-border text-xs md:text-sm">
+                      <p>{skill}</p>
                     </div>
                   ))}
-                </CardContent>
-              </Card>
-            </TabsContent>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-            <TabsContent value="security">
-              {/* Security Skills Chart */}
+          <TabsContent value="other">
+            <div className="grid grid-cols-1 gap-6 md:gap-8">
+              {/* Writing Skills */}
               <Card>
-                <CardHeader>
-                  <CardTitle>Security & Forensics Skills</CardTitle>
-                  <CardDescription>Proficiency in cybersecurity and digital forensics</CardDescription>
+                <CardHeader className="p-4 md:p-6">
+                  <CardTitle className="text-lg md:text-xl">Writing Skills</CardTitle>
+                  <CardDescription className="text-xs md:text-sm">Content writing and documentation capabilities</CardDescription>
                 </CardHeader>
-                <CardContent className="h-96">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                      data={securitySkillsData}
-                      layout="vertical"
-                      margin={{ top: 5, right: 30, left: 40, bottom: 5 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" horizontal={false} />
-                      <XAxis type="number" domain={[0, 100]} />
-                      <YAxis dataKey="name" type="category" width={120} />
-                      <Tooltip
-                        formatter={(value) => [`${value}%`, "Proficiency"]}
-                        cursor={{ fill: "rgba(0, 0, 0, 0.1)" }}
-                      />
-                      <Bar dataKey="score" radius={[0, 4, 4, 0]}>
-                        {securitySkillsData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill="#000000" fillOpacity={entry.score / 100} />
-                        ))}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
-                </CardContent>
-              </Card>
-
-              {/* Core Skills List */}
-              <Card className="mt-8">
-                <CardHeader>
-                  <CardTitle>Additional Security Skills</CardTitle>
-                  <CardDescription>Other security and forensics capabilities</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {expertiseData["Core Skills"]
-                      .filter(
-                        (skill) =>
-                          !securitySkillsData.some(
-                            (item) => item.name === skill || item.name === skill.split("(")[0].trim(),
-                          ),
-                      )
-                      .map((skill, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center gap-3 p-3 bg-background rounded-lg border border-border"
-                        >
-                          <div className="w-2 h-2 rounded-full bg-black dark:bg-white"></div>
-                          <span>{skill}</span>
-                        </div>
-                      ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="design">
-              {/* Design Skills Chart */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Design Skills</CardTitle>
-                  <CardDescription>Proficiency in design and UI/UX</CardDescription>
-                </CardHeader>
-                <CardContent className="h-80">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                      data={designSkillsData}
-                      layout="vertical"
-                      margin={{ top: 5, right: 30, left: 40, bottom: 5 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" horizontal={false} />
-                      <XAxis type="number" domain={[0, 100]} />
-                      <YAxis dataKey="name" type="category" width={120} />
-                      <Tooltip
-                        formatter={(value) => [`${value}%`, "Proficiency"]}
-                        cursor={{ fill: "rgba(0, 0, 0, 0.1)" }}
-                      />
-                      <Bar dataKey="score" radius={[0, 4, 4, 0]}>
-                        {designSkillsData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill="#000000" fillOpacity={entry.score / 100} />
-                        ))}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
-                </CardContent>
-              </Card>
-
-              {/* Design Skills Details */}
-              <Card className="mt-8">
-                <CardHeader>
-                  <CardTitle>Design Specializations</CardTitle>
-                  <CardDescription>Detailed design capabilities and focus areas</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {expertiseData["Design Skills"].map((skill, index) => (
-                      <div key={index} className="p-4 bg-background rounded-lg border border-border">
+                <CardContent className="p-4 md:p-6">
+                  <div className="space-y-3 md:space-y-4">
+                    {expertiseData["Writing Skills"].map((skill, index) => (
+                      <div key={index} className="p-3 md:p-4 bg-background rounded-lg border border-border text-xs md:text-sm">
                         <p>{skill}</p>
                       </div>
                     ))}
                   </div>
                 </CardContent>
               </Card>
-            </TabsContent>
 
-            <TabsContent value="other">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Writing Skills */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Writing Skills</CardTitle>
-                    <CardDescription>Content writing and documentation capabilities</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      {expertiseData["Writing Skills"].map((skill, index) => (
-                        <div key={index} className="p-4 bg-background rounded-lg border border-border">
-                          <p>{skill}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Leadership Skills */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Leadership Skills</CardTitle>
-                    <CardDescription>Management and organizational capabilities</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      {expertiseData["Leadership Skills"].map((skill, index) => (
-                        <div key={index} className="p-4 bg-background rounded-lg border border-border">
-                          <p>{skill}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
+              {/* Leadership Skills */}
+              <Card>
+                <CardHeader className="p-4 md:p-6">
+                  <CardTitle className="text-lg md:text-xl">Leadership Skills</CardTitle>
+                  <CardDescription className="text-xs md:text-sm">Management and organizational capabilities</CardDescription>
+                </CardHeader>
+                <CardContent className="p-4 md:p-6">
+                  <div className="space-y-3 md:space-y-4">
+                    {expertiseData["Leadership Skills"].map((skill, index) => (
+                      <div key={index} className="p-3 md:p-4 bg-background rounded-lg border border-border text-xs md:text-sm">
+                        <p>{skill}</p>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
 
               {/* Web Development */}
-              <Card className="mt-8">
-                <CardHeader>
-                  <CardTitle>Web Development</CardTitle>
-                  <CardDescription>Additional web development capabilities</CardDescription>
+              <Card>
+                <CardHeader className="p-4 md:p-6">
+                  <CardTitle className="text-lg md:text-xl">Web Development</CardTitle>
+                  <CardDescription className="text-xs md:text-sm">Additional web development capabilities</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
+                <CardContent className="p-4 md:p-6">
+                  <div className="space-y-3 md:space-y-4">
                     {expertiseData["Web development"].map((skill, index) => (
-                      <div key={index} className="p-4 bg-background rounded-lg border border-border">
+                      <div key={index} className="p-3 md:p-4 bg-background rounded-lg border border-border text-xs md:text-sm">
                         <p>{skill}</p>
                       </div>
                     ))}
                   </div>
                 </CardContent>
               </Card>
-            </TabsContent>
-          </Tabs>
-        </div>
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
-    </section>
+    </div>
+  </section>
   )
 }
