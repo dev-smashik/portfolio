@@ -14,7 +14,7 @@ const projectsData = [
     title: "Ai Based Resume Scanning & Job Searching",
     description:
       "Ai based resume scanning and job searching platform that matches candidates with job openings.",
-    image: "/jobportal.jpg?height=600&width=800",
+    image: "/Jobportal.jpg?height=600&width=800",
     demoLink: "https://ai-resume-checker-and-job-searching.vercel.app/",
     githubLink: "https://github.com/dev-smashik/AI-Resume-Checker-and-Job-Searching",
     tags: ["Next JS", "Tailwind CSS", "Neon DB", "Gemini AI"],
