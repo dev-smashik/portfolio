@@ -124,11 +124,11 @@ export default function AboutSection() {
                     className={cn(
                       "px-3 py-1 rounded-full text-sm font-medium",
                       skill.category === "programming" &&
-                        "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
+                        "bg-slate-100 text-black hover:bg-slate-950 hover:text-white",
                       skill.category === "design" &&
-                        "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300",
-                      skill.category === "security" && "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300",
-                      skill.category === "ai" && "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300",
+                        "bg-slate-100 text-black hover:bg-slate-950 hover:text-white",
+                      skill.category === "security" && "bg-slate-100 text-black hover:bg-slate-950 hover:text-white",
+                      skill.category === "ai" && "bg-slate-100 text-black hover:bg-slate-950 hover:text-white",
                     )}
                   >
                     {skill.name}
